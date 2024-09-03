@@ -67,7 +67,7 @@ export async function deleteSale(id: string) {
 export async function getSales() {
     try {
         const { rows } = await sql`
-            SELECT id, typeProduct, typeSale, quantity, price FROM sale_probakers
+            SELECT id, typeProduct, typeSale, quantity, price, createdat FROM sale_probakers
         `;
         return rows as Sale[];
     } catch (error) {
@@ -83,7 +83,7 @@ export async function getSalesByDate(date: string) {
             return getSales();
         }
         const { rows } = await sql`
-            SELECT id, typeProduct, typeSale, quantity, price
+            SELECT id, typeProduct, typeSale, quantity, price, createdat
             FROM sale_probakers
             WHERE createdAt = ${new Date(date).toISOString()}
         `;
