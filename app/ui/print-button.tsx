@@ -1,18 +1,27 @@
 'use client'
 
 function onClick() {
-    var printContents = document.getElementById('printTable').innerHTML;
-    var originalContents = document.body.innerHTML;
+    if (document) {
+        const printTableElement = document.getElementById('printTable');
+        const dateOptionElement = document.getElementById('dateOption');
+        const printButtonElement = document.getElementById('printButton');
 
-    document.body.innerHTML = printContents;
-    document.getElementById('dateOption').style.display = 'none';
-    document.getElementById('printButton').style.display = 'none';
+        if (printTableElement && dateOptionElement && printButtonElement) {
+            const printContents = printTableElement.innerHTML;
+            const originalContents = document.body.innerHTML;
 
-    window.print();
+            document.body.innerHTML = printContents;
+            dateOptionElement.style.display = 'none';
+            printButtonElement.style.display = 'none';
 
-    document.body.innerHTML = originalContents;
-    document.getElementById('dateOption').style.display = 'block';
-    document.getElementById('printButton').style.display = 'flex';
+            window.print();
+
+            document.body.innerHTML = originalContents;
+            dateOptionElement.style.display = 'block';
+            printButtonElement.style.display = 'flex';
+        }
+    }
+
 }
 export default function PrintButton() {
     return (
