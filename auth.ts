@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import { User } from './app/lib/definitions';
 import { PrismaClient } from './generated/prisma-client-js';
+import { TbPasswordUser } from 'react-icons/tb';
 
 const prisma = new PrismaClient();
 
@@ -72,7 +73,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     const user = await getUser(username);
                     if (!user) return null;
 
-                    const passwordsMatch = await bcrypt.compare(password, user.password as string);
+                    let passwordsMatch = null;
+                    if (user?.password) {
+                        passwordsMatch = await bcrypt.compare(password, user.password);
+                        // Proceed based on the result of passwordsMatch
+                    } 
 
                     // filter out the password from the user object
                     // delete user.password;
