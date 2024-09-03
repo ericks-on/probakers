@@ -43,7 +43,7 @@ const prisma = new PrismaClient();
 export async function getUser(username: string) {
     try {
         const { rows } = await sql`
-            SELECT id, username, email, name, role
+            SELECT id, username, email, name, role, password
             FROM users
             WHERE username = ${username}
         `;
@@ -109,7 +109,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
                     let passwordsMatch = null;
                     if (user?.password) {
-                        passwordsMatch = await bcrypt.compare(password, user.password);
+                        // passwordsMatch = await bcrypt.compare(password, user.password);
+                        passwordsMatch = password === user.password;
                         // Proceed based on the result of passwordsMatch
                         console.log(passwordsMatch);
                     } 
