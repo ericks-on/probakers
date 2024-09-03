@@ -18,8 +18,8 @@ export type Kitchen = {
 
 export type Sale = {
     id: string;
-    typeProduct: string;
-    typeSale: string;
+    typeproduct: string;
+    typesale: string;
     quantity: number;
     price: number;
     createdat: Date;
