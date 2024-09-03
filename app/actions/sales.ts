@@ -1,11 +1,12 @@
 'use server'
 
-import { prisma } from '../lib/prisma';
+import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
-import { Sale } from '../lib/definitions';
 import { v4 as uuidv4 } from 'uuid';
 import { redirect } from 'next/navigation';
+import { Sale } from '../lib/definitions';
 
+// Add a new sale
 export async function addSale(
     prevState: string | undefined,
     formdata: FormData
@@ -30,11 +31,12 @@ export async function addSale(
             price: parseInt(price),
         };
 
-        await prisma.sale.create({
-            data: sale,
-        });
+        // Insert the new sale into the database
+        await sql`
+            INSERT INTO sales (id, typeProduct, typeSale, quantity, price)
+            VALUES (${sale.id}, ${sale.typeProduct}, ${sale.typeSale}, ${sale.quantity}, ${sale.price})
+        `;
 
-        
     } catch (error) {
         console.error('Error adding sale:', error);
         return 'Error adding sale';
@@ -44,15 +46,14 @@ export async function addSale(
     redirect('/inventory/sales');
 }
 
+// Delete a sale by ID
 export async function deleteSale(id: string) {
     try {
-        await prisma.sale.delete({
-            where: {
-                id,
-            },
-        }) as Sale;
+        await sql`
+            DELETE FROM sales
+            WHERE id = ${id}
+        `;
 
-        
     } catch (error) {
         console.error('Error deleting sale:', error);
         return 'Error deleting sale';
@@ -62,32 +63,128 @@ export async function deleteSale(id: string) {
     redirect('/inventory/sales');
 }
 
+// Get all sales
 export async function getSales() {
     try {
-        const sales = await prisma.sale.findMany() as Sale[];
-        return sales;
+        const { rows } = await sql`
+            SELECT id, typeProduct, typeSale, quantity, price FROM sales
+        `;
+        return rows as Sale[];
     } catch (error) {
         console.error('Error fetching sales:', error);
         return 'Error fetching sales';
     }
 }
 
-// sale by date
+// Get sales by date
 export async function getSalesByDate(date: string) {
     try {
         if (date === 'all') {
             return getSales();
         }
-        const sales = await prisma.sale.findMany({
-            where: {
-                createdAt: {
-                    equals: new Date(date),
-                },
-            },
-        }) as Sale[];
-        return sales;
+        const { rows } = await sql`
+            SELECT id, typeProduct, typeSale, quantity, price
+            FROM sales
+            WHERE createdAt = ${new Date(date).toISOString()}
+        `;
+        return rows as Sale[];
     } catch (error) {
         console.error('Error fetching sales by date:', error);
         return 'Error fetching sales by date';
     }
 }
+
+
+// 'use server'
+
+// import { prisma } from '../lib/prisma';
+// import { revalidatePath } from 'next/cache';
+// import { Sale } from '../lib/definitions';
+// import { v4 as uuidv4 } from 'uuid';
+// import { redirect } from 'next/navigation';
+
+// export async function addSale(
+//     prevState: string | undefined,
+//     formdata: FormData
+// ) {
+//     try {
+//         const typeProduct = formdata.get('typeProduct') as string;
+//         const typeSale = formdata.get('typeSale') as string;
+//         const quantity = formdata.get('quantity') as string;
+//         const price = formdata.get('price') as string;
+
+//         // Validate data
+//         if (!typeProduct || !typeSale || !quantity || isNaN(parseInt(quantity)) ||
+//             !price || isNaN(parseInt(price))) {
+//             return 'Invalid input data';
+//         }
+
+//         const sale = {
+//             id: uuidv4(),
+//             typeProduct,
+//             typeSale,
+//             quantity: parseInt(quantity),
+//             price: parseInt(price),
+//         };
+
+//         await prisma.sale.create({
+//             data: sale,
+//         });
+
+        
+//     } catch (error) {
+//         console.error('Error adding sale:', error);
+//         return 'Error adding sale';
+//     }
+//     // Revalidate the page 
+//     revalidatePath('/inventory/sales');
+//     redirect('/inventory/sales');
+// }
+
+// export async function deleteSale(id: string) {
+//     try {
+//         await prisma.sale.delete({
+//             where: {
+//                 id,
+//             },
+//         }) as Sale;
+
+        
+//     } catch (error) {
+//         console.error('Error deleting sale:', error);
+//         return 'Error deleting sale';
+//     }
+//     // Revalidate the page
+//     revalidatePath('/inventory/sales');
+//     redirect('/inventory/sales');
+// }
+
+// export async function getSales() {
+//     try {
+//         const sales = await prisma.sale.findMany() as Sale[];
+//         return sales;
+//     } catch (error) {
+//         console.error('Error fetching sales:', error);
+//         return 'Error fetching sales';
+//     }
+// }
+
+// // sale by date
+// export async function getSalesByDate(date: string) {
+//     try {
+//         if (date === 'all') {
+//             return getSales();
+//         }
+//         const sales = await prisma.sale.findMany({
+//             where: {
+//                 createdAt: {
+//                     equals: new Date(date),
+//                 },
+//             },
+//         }) as Sale[];
+//         return sales;
+//     } catch (error) {
+//         console.error('Error fetching sales by date:', error);
+//         return 'Error fetching sales by date';
+//     }
+// }
