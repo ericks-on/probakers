@@ -4,11 +4,14 @@ import { getUsers, deleteUser } from "@/app/actions/users";
 import DeleteButton from "../delete-button";
 import { CiCalendarDate, CiUser } from "react-icons/ci";
 import { auth } from "@/auth";
+import { User } from "@/app/lib/definitions";
 
 export default async function UserTable() {
     let items = await getUsers();
     if (typeof items === 'string') {
         items = [];
+    } else {
+        items = items as User[];
     }
     const session = await auth();
     let username = null;

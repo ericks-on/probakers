@@ -68,7 +68,7 @@ export async function deleteUser(id: string) {
 export async function getUsers() {
     try {
         const { rows } = await sql`
-            SELECT id, username, email, name, role FROM Users_probakers
+            SELECT id, username, email, name, role, createdat FROM Users_probakers
         `;
 
         // Change password to hidden from the response
