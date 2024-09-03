@@ -33,7 +33,7 @@ export async function addSale(
 
         // Insert the new sale into the database
         await sql`
-            INSERT INTO sales (id, typeProduct, typeSale, quantity, price)
+            INSERT INTO sale_probakers (id, typeProduct, typeSale, quantity, price)
             VALUES (${sale.id}, ${sale.typeProduct}, ${sale.typeSale}, ${sale.quantity}, ${sale.price})
         `;
 
@@ -50,7 +50,7 @@ export async function addSale(
 export async function deleteSale(id: string) {
     try {
         await sql`
-            DELETE FROM sales
+            DELETE FROM sale_probakers
             WHERE id = ${id}
         `;
 
@@ -67,7 +67,7 @@ export async function deleteSale(id: string) {
 export async function getSales() {
     try {
         const { rows } = await sql`
-            SELECT id, typeProduct, typeSale, quantity, price FROM sales
+            SELECT id, typeProduct, typeSale, quantity, price FROM sale_probakers
         `;
         return rows as Sale[];
     } catch (error) {
@@ -84,7 +84,7 @@ export async function getSalesByDate(date: string) {
         }
         const { rows } = await sql`
             SELECT id, typeProduct, typeSale, quantity, price
-            FROM sales
+            FROM sale_probakers
             WHERE createdAt = ${new Date(date).toISOString()}
         `;
         return rows as Sale[];

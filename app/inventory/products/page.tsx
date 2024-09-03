@@ -7,8 +7,10 @@ export default async function ProductsPage() {
     let items = await getProducts();
     let dates = [] as string[];
     if (typeof items !== 'string') {
-        dates = items.map((item) => item.createdAt.toISOString().split('T')[0]);
-        dates = [...new Set(dates)];
+        if (items.length > 0) {
+            dates = items.map((item) => item.createdat.toISOString().split('T')[0]);
+            dates = [...new Set(dates)];
+        }
     } else {
         items = [] as Product[];
     }

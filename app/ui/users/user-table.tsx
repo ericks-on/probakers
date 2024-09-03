@@ -36,7 +36,7 @@ export default async function UserTable() {
                             <tr key={index} className="border-b">
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate flex gap-2 items-center">
                                     <CiCalendarDate className="text-green-500" />
-                                    {item.createdAt.toLocaleString()}
+                                    {item.createdat.toLocaleString()}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate"> 
                                     <div className="flex items-center gap-2">

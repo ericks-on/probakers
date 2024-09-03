@@ -14,7 +14,7 @@ export default async function SalesTable(
 
     if (date !== 'all') {
         items = items as Sale[];
-        items = items.filter((item) => item.createdAt.toISOString().split('T')[0] === date);
+        items = items.filter((item) => item.createdat.toISOString().split('T')[0] === date);
     } else {
         items = items as Sale[];
     }
@@ -52,7 +52,7 @@ export default async function SalesTable(
                             <tr key={index} className="border-b">
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate flex gap-2 items-center">
                                     <CiCalendarDate className="text-green-500" />
-                                    {item.createdAt.toLocaleString()}
+                                    {item.createdat.toLocaleString()}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.typeSale}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.typeProduct}</td>

@@ -34,7 +34,7 @@ export async function addUser(
 
         // Insert the new user into the database
         await sql`
-            INSERT INTO Users (id, username, password, email, name, role)
+            INSERT INTO Users_probakers (id, username, password, email, name, role)
             VALUES (${uuidv4()}, ${username}, ${hashedPassword}, ${email}, ${firstname} || ' ' || ${lastname}, ${role})
         `;
 
@@ -51,7 +51,7 @@ export async function addUser(
 export async function deleteUser(id: string) {
     try {
         await sql`
-            DELETE FROM Users
+            DELETE FROM Users_probakers
             WHERE id = ${id}
         `;
 
@@ -68,7 +68,7 @@ export async function deleteUser(id: string) {
 export async function getUsers() {
     try {
         const { rows } = await sql`
-            SELECT id, username, email, name, role FROM Users
+            SELECT id, username, email, name, role FROM Users_probakers
         `;
 
         // Change password to hidden from the response

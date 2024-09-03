@@ -33,7 +33,7 @@ export async function addKitchen(
 
         // Insert the new item into the database
         await sql`
-            INSERT INTO kitchen (id, rawproduct, type, quantity, producequantity)
+            INSERT INTO kitchen_probakers (id, rawproduct, type, quantity, producequantity)
             VALUES (${kitchen.id}, ${kitchen.rawproduct}, ${kitchen.type}, ${kitchen.quantity}, ${kitchen.producequantity})
         `;
 
@@ -50,7 +50,7 @@ export async function addKitchen(
 export async function deleteKitchen(id: string) {
     try {
         await sql`
-            DELETE FROM kitchen
+            DELETE FROM kitchen_probakers
             WHERE id = ${id}
         `;
 
@@ -67,7 +67,7 @@ export async function deleteKitchen(id: string) {
 export async function getKitchen() {
     try {
         const { rows } = await sql`
-            SELECT * FROM kitchen
+            SELECT * FROM kitchen_probakers
         `;
         return rows as Kitchen[];
     } catch (error) {
@@ -83,7 +83,7 @@ export async function getKitchenByDate(date: string) {
             return getKitchen();
         }
         const { rows } = await sql`
-            SELECT * FROM kitchen
+            SELECT * FROM kitchen_probakers
             WHERE createdAt = ${date}
         `;
         return rows as Kitchen[];

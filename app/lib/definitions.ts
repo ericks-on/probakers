@@ -5,7 +5,7 @@ export type User = {
     email: string;
     name: string;
     role: string;
-    createdAt: Date;
+    createdat: Date;
 }
 
 export type Kitchen = {
@@ -13,7 +13,7 @@ export type Kitchen = {
     rawproduct: string;
     type: string;
     quantity: number;
-    createdAt: Date;
+    createdat: Date;
 }
 
 export type Sale = {
@@ -22,7 +22,7 @@ export type Sale = {
     typeSale: string;
     quantity: number;
     price: number;
-    createdAt: Date;
+    createdat: Date;
 }
 
 export type Product = {
@@ -30,5 +30,5 @@ export type Product = {
     name: string;
     price: number;
     quantity: number;
-    createdAt: Date;
+    createdat: Date;
 }

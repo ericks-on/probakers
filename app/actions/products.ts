@@ -31,7 +31,7 @@ export async function addProduct(
 
         // Insert the new product into the database
         await sql`
-            INSERT INTO products (id, name, price, quantity)
+            INSERT INTO product_probakers (id, name, price, quantity)
             VALUES (${product.id}, ${product.name}, ${product.price}, ${product.quantity})
         `;
 
@@ -48,7 +48,7 @@ export async function addProduct(
 export async function deleteProduct(id: string) {
     try {
         await sql`
-            DELETE FROM products
+            DELETE FROM product_probakers
             WHERE id = ${id}
         `;
 
@@ -65,7 +65,7 @@ export async function deleteProduct(id: string) {
 export async function getProducts() {
     try {
         const { rows } = await sql`
-            SELECT * FROM products
+            SELECT * FROM product_probakers
         `;
         return rows as Product[];
     } catch (error) {
@@ -81,7 +81,7 @@ export async function getProductsByDate(date: string) {
     }
     try {
         const { rows } = await sql`
-            SELECT * FROM products
+            SELECT * FROM product_probakers
             WHERE createdAt = ${new Date(date).toISOString()}
         `;
         return rows as Product[];

@@ -16,7 +16,7 @@ export default function ProductsTable(
         items = items as Product[];
     } else {
         items = items as Product[];
-        items = items.filter((item) => item.createdAt.toISOString().split('T')[0] === date);
+        items = items.filter((item) => item.createdat.toISOString().split('T')[0] === date);
     }
 
     return (
@@ -51,7 +51,7 @@ export default function ProductsTable(
                             <tr key={index} className="border-b">
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate flex gap-2 items-center">
                                     <CiCalendarDate className="text-green-500" />
-                                    {item.createdAt.toLocaleString()}
+                                    {item.createdat.toLocaleString()}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.name}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate">{item.quantity}</td>
