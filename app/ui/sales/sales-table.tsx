@@ -9,11 +9,14 @@ import PrintButton from "../print-button";
 import { Sale } from "@/app/lib/definitions";
 
 export default async function SalesTable(
-    { dates, items }: { dates: string[], items: Sale[] }) {
+    { dates, items }: { dates: string[], items: Sale[] | string }) {
     const [date, setDate] = useState('all');
 
     if (date !== 'all') {
+        items = items as Sale[];
         items = items.filter((item) => item.createdAt.toISOString().split('T')[0] === date);
+    } else {
+        items = items as Sale[];
     }
 
     return (
