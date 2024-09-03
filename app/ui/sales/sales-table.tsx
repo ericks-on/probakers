@@ -6,10 +6,11 @@ import { getSales, deleteSale } from "@/app/actions/sales";
 import DeleteButton from "../delete-button";
 import { CiCalendarDate } from "react-icons/ci";
 import PrintButton from "../print-button";
+import { Sale } from "@/app/lib/definitions";
 
-export default async function SalesTable({ dates }: { dates: string[] }) {
+export default async function SalesTable(
+    { dates, items }: { dates: string[], items: Sale[] }) {
     const [date, setDate] = useState('all');
-    let items = await getSales();
 
     if (date !== 'all') {
         items = items.filter((item) => item.createdAt.toISOString().split('T')[0] === date);

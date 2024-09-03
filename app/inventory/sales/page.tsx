@@ -4,7 +4,7 @@ import SalesTable from "@/app/ui/sales/sales-table";
 
 export default async function SalesPage() {
     const items = await getSales();
-    let dates = null;
+    let dates = [] as string[];
     if (typeof items !== 'string') {
         dates = items.map((item) => item.createdAt.toISOString().split('T')[0]);
         dates = [...new Set(dates)];

@@ -4,7 +4,7 @@ import ProductsTable from "@/app/ui/products/products-table";
 
 export default async function ProductsPage() {
     const items = await getProducts();
-    let dates = [];
+    let dates = [] as string[];
     if (typeof items !== 'string') {
         dates = items.map((item) => item.createdAt.toISOString().split('T')[0]);
         dates = [...new Set(dates)];

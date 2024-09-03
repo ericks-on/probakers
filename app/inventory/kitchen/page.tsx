@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 
 export default async function KitchenPage() {
     const items = await getKitchen();
-    let dates = [];
+    let dates = [] as string[];
     if (items !== 'Error fetching kitchen items') {
         dates = items.map((item) => item.createdAt.toISOString().split('T')[0]);
         dates = [...new Set(dates)];
