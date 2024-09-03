@@ -6,7 +6,10 @@ import { CiCalendarDate, CiUser } from "react-icons/ci";
 import { auth } from "@/auth";
 
 export default async function UserTable() {
-    const items = await getUsers();
+    let items = await getUsers();
+    if (typeof items === 'string') {
+        items = [];
+    }
     const session = await auth();
     let username = null;
     if (session) {
