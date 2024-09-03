@@ -72,7 +72,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                     const user = await getUser(username);
                     if (!user) return null;
 
-                    const passwordsMatch = await bcrypt.compare(password, user.password);
+                    const passwordsMatch = await bcrypt.compare(password, user.password as string);
 
                     // filter out the password from the user object
                     // delete user.password;
