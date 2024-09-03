@@ -40,15 +40,29 @@ import { TbPasswordUser } from 'react-icons/tb';
 //     }
 // }
 
-export async function getUser(username: string) {
+// export async function getUser(username: string) {
+//     try {
+//         const { rows } = await sql`
+//             SELECT *
+//             FROM users
+//             WHERE username = ${username}
+//         `;
+
+//         return rows[0] as User | undefined;
+//     } catch (error) {
+//         console.error('Failed to fetch user:', error);
+//         throw new Error('Failed to fetch user.');
+//     }
+// }
+
+async function getUser(username: string): Promise<User | undefined> {
     try {
-        const { rows } = await sql`
-            SELECT id, username, email, name, role, password
-            FROM users
-            WHERE username = ${username}
+        const result = await sql<User>`
+            SELECT * FROM users_probakers WHERE username = ${username}
         `;
 
-        return rows[0] as User | undefined;
+        // If a user is found, return the first result
+        return result.rows[0] as User | undefined;
     } catch (error) {
         console.error('Failed to fetch user:', error);
         throw new Error('Failed to fetch user.');
@@ -60,7 +74,7 @@ export async function getUserById(id: string) {
     try {
         const { rows } = await sql`
             SELECT id, username, email, name, role
-            FROM users
+            FROM users_probakers
             WHERE id = ${id}
         `;
 
@@ -105,6 +119,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 if (parsedCredentials.success) {
                     const { username, password } = parsedCredentials.data;
                     const user = await getUser(username);
+                    console.log(username)
+                    console.log(JSON.stringify(user))
                     if (!user) return null;
 
                     let passwordsMatch = null;
@@ -124,8 +140,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
                     if (passwordsMatch) {
                         // Hide password in the returned user object
-                        const { password, ...userWithoutPassword } = user;
-                        return userWithoutPassword;
+                        return user
+                        // const { password, ...userWithoutPassword } = user;
+                        // return userWithoutPassword;
                     }
                 }
 
