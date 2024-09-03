@@ -34,13 +34,14 @@ export async function addKitchen(
             data: kitchen,
         });
 
-        // Revalidate the page 
-        revalidatePath('/inventory/kitchen');
-        redirect('/inventory/kitchen');
+        
     } catch (error) {
         console.error('Error adding kitchen item:', error);
         return 'Error adding kitchen item';
     }
+    // Revalidate the page 
+    revalidatePath('/inventory/kitchen');
+    redirect('/inventory/kitchen');
 }
 
 export async function deleteKitchen(id: string) {
@@ -51,13 +52,14 @@ export async function deleteKitchen(id: string) {
             },
         }) as Kitchen;
 
-        // Revalidate the page
-        revalidatePath('/inventory/kitchen');
-        redirect('/inventory/kitchen');
+        
     } catch (error) {
         console.error('Error deleting kitchen item:', error);
         return 'Error deleting kitchen item';
     }
+    // Revalidate the page
+    revalidatePath('/inventory/kitchen');
+    redirect('/inventory/kitchen');
 }
 
 export async function getKitchen() {
@@ -67,5 +69,23 @@ export async function getKitchen() {
     } catch (error) {
         console.error('Error fetching kitchen items:', error);
         return 'Error fetching kitchen items';
+    }
+}
+
+// kitchen by date
+export async function getKitchenByDate(date: string) {
+    try {
+        if (date === 'all') {
+            return getKitchen();
+        }
+        const kitchens = await prisma.kitchen.findMany({
+            where: {
+                createdAt: date,
+            },
+        }) as Kitchen[];
+        return kitchens;
+    } catch (error) {
+        console.error('Error fetching kitchen items by date:', error);
+        return 'Error fetching kitchen items by date';
     }
 }

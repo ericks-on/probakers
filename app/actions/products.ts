@@ -32,13 +32,14 @@ export async function addProduct(
             data: product,
         });
 
-        // Revalidate the page 
-        revalidatePath('/inventory/products');
-        redirect('/inventory/products');
+        
     } catch (error) {
         console.error('Error adding product:', error);
         return 'Error adding product';
     }
+    // Revalidate the page 
+    revalidatePath('/inventory/products');
+    redirect('/inventory/products');
 }
 
 export async function deleteProduct(id: string) {
@@ -49,18 +50,37 @@ export async function deleteProduct(id: string) {
             },
         }) as Product;
 
-        // Revalidate the page
-        revalidatePath('/inventory/products');
-        redirect('/inventory/products');
+        
     } catch (error) {
         console.error('Error deleting product:', error);
         return 'Error deleting product';
     }
+    // Revalidate the page
+    revalidatePath('/inventory/products');
+    redirect('/inventory/products');
 }
 
 export async function getProducts() {
     try {
         const products = await prisma.product.findMany() as Product[];
+        return products;
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return 'Error fetching products';
+    }
+}
+
+// products by date
+export async function getProductsByDate(date: string) {
+    if (date === 'all') {
+        return getProducts();
+    }
+    try {
+        const products = await prisma.product.findMany({
+            where: {
+                createdAt: new Date(date),
+            },
+        }) as Product[];
         return products;
     } catch (error) {
         console.error('Error fetching products:', error);

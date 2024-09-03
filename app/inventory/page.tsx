@@ -9,12 +9,12 @@ interface BlogPost {
 const blogPosts: BlogPost[] = [
     {
         title: 'Managing Your Kitchen with Ease',
-        imageUrl: '/images/event-drinks.jpg',
+        imageUrl: '/images/kit1.jpg',
         content: 'Our app streamlines the management of raw products, kitchen items, and sales. With just a few clicks, you can track inventory, monitor sales, and ensure everything runs smoothly in your kitchen. Plus, you can print detailed reports for easy record-keeping.',
     },
     {
         title: 'Optimizing Sales and Inventory',
-        imageUrl: '/images/event-drinks.jpg',
+        imageUrl: '/images/kit2.jpg',
         content: 'Stay on top of your sales and inventory with our app. It provides real-time updates and helps you make informed decisions. Whether it\'s adjusting stock levels or analyzing sales trends, our app has you covered.',
     },
     // Add more blog posts as needed

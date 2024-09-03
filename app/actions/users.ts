@@ -42,13 +42,14 @@ export async function addUser(
             data: user,
         });
 
-        // Revalidate the page 
-        revalidatePath('/inventory/admin/users');
-        redirect('/inventory/admin/users');
+        
     } catch (error) {
         console.error('Error adding user:', error);
         return 'Error adding user';
     }
+    // Revalidate the page 
+    revalidatePath('/inventory/admin/users');
+    redirect('/inventory/admin/users');
 }
 
 export async function deleteUser(id: string) {
@@ -59,13 +60,14 @@ export async function deleteUser(id: string) {
             },
         }) as User;
 
-        // Revalidate the page
-        revalidatePath('/inventory/admin/users');
-        redirect('/inventory/admin/users');
+        
     } catch (error) {
         console.error('Error deleting user:', error);
         return 'Error deleting user';
     }
+    // Revalidate the page
+    revalidatePath('/inventory/admin/users');
+    redirect('/inventory/admin/users');
 }
 
 export async function getUsers() {

@@ -34,13 +34,14 @@ export async function addSale(
             data: sale,
         });
 
-        // Revalidate the page 
-        revalidatePath('/inventory/sales');
-        redirect('/inventory/sales');
+        
     } catch (error) {
         console.error('Error adding sale:', error);
         return 'Error adding sale';
     }
+    // Revalidate the page 
+    revalidatePath('/inventory/sales');
+    redirect('/inventory/sales');
 }
 
 export async function deleteSale(id: string) {
@@ -51,13 +52,14 @@ export async function deleteSale(id: string) {
             },
         }) as Sale;
 
-        // Revalidate the page
-        revalidatePath('/inventory/sales');
-        redirect('/inventory/sales');
+        
     } catch (error) {
         console.error('Error deleting sale:', error);
         return 'Error deleting sale';
     }
+    // Revalidate the page
+    revalidatePath('/inventory/sales');
+    redirect('/inventory/sales');
 }
 
 export async function getSales() {
@@ -67,5 +69,25 @@ export async function getSales() {
     } catch (error) {
         console.error('Error fetching sales:', error);
         return 'Error fetching sales';
+    }
+}
+
+// sale by date
+export async function getSalesByDate(date: string) {
+    try {
+        if (date === 'all') {
+            return getSales();
+        }
+        const sales = await prisma.sale.findMany({
+            where: {
+                createdAt: {
+                    equals: new Date(date),
+                },
+            },
+        }) as Sale[];
+        return sales;
+    } catch (error) {
+        console.error('Error fetching sales by date:', error);
+        return 'Error fetching sales by date';
     }
 }
