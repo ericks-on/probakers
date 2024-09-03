@@ -5,34 +5,66 @@ import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import { User } from './app/lib/definitions';
 import { PrismaClient } from './generated/prisma-client-js';
+import { sql } from '@vercel/postgres';
 import { TbPasswordUser } from 'react-icons/tb';
 
 const prisma = new PrismaClient();
 
 
-async function getUser(username: string) {
-    try {
-        // Fetch user from the database using Prisma
-        const user = await prisma.user.findUnique({
-            where: { username },
-        }) as User;
+// async function getUser(username: string) {
+//     try {
+//         // Fetch user from the database using Prisma
+//         const user = await prisma.user.findUnique({
+//             where: { username },
+//         }) as User;
 
-        return user || undefined;
+//         return user || undefined;
+//     } catch (error) {
+//         console.error('Failed to fetch user:', error);
+//         throw new Error('Failed to fetch user.');
+//     }
+// }
+
+// // get user by id
+// async function getUserById(id: string) {
+//     try {
+//         // Fetch user from the database using Prisma
+//         const user = await prisma.user.findUnique({
+//             where: { id },
+//         }) as User;
+
+//         return user || undefined;
+//     } catch (error) {
+//         console.error('Failed to fetch user:', error);
+//         throw new Error('Failed to fetch user.');
+//     }
+// }
+
+export async function getUser(username: string) {
+    try {
+        const { rows } = await sql`
+            SELECT id, username, email, name, role
+            FROM users
+            WHERE username = ${username}
+        `;
+
+        return rows[0] as User | undefined;
     } catch (error) {
         console.error('Failed to fetch user:', error);
         throw new Error('Failed to fetch user.');
     }
 }
 
-// get user by id
-async function getUserById(id: string) {
+// Get user by ID
+export async function getUserById(id: string) {
     try {
-        // Fetch user from the database using Prisma
-        const user = await prisma.user.findUnique({
-            where: { id },
-        }) as User;
+        const { rows } = await sql`
+            SELECT id, username, email, name, role
+            FROM users
+            WHERE id = ${id}
+        `;
 
-        return user || undefined;
+        return rows[0] as User | undefined;
     } catch (error) {
         console.error('Failed to fetch user:', error);
         throw new Error('Failed to fetch user.');
@@ -45,10 +77,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         async jwt({ token, user }) {
             if (token.sub) {
                 const userDetails = await getUserById(token.sub);
-                token.role = userDetails.role as string;
-                token.info = {
-                    username: userDetails.username,
-                    email: userDetails.email,
+                if (userDetails) {
+                    token.role = userDetails.role as string;
+                    token.info = {
+                        username: userDetails.username,
+                        email: userDetails.email,
+                    }
                 }
             }
             return token;

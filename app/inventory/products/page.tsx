@@ -1,7 +1,7 @@
 import { getProducts } from "@/app/actions/products";
+import { Product } from "@/app/lib/definitions";
 import ProductsForm from "@/app/ui/products/products-form";
 import ProductsTable from "@/app/ui/products/products-table";
-import { Product } from "@/generated/prisma-client-js";
 
 export default async function ProductsPage() {
     let items = await getProducts();
