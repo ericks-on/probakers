@@ -3,7 +3,7 @@
 import { Product } from "@/app/lib/definitions";
 import { Suspense, useState } from "react";
 import TableSkeleton from "@/app/ui/skeletons/table-skeleton";
-import { deleteProduct } from "@/app/actions/product";
+import { deleteProduct } from "@/app/actions/products";
 import DeleteButton from "../delete-button";
 import { CiCalendarDate } from "react-icons/ci";
 import PrintButton from "../print-button";
