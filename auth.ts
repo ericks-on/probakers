@@ -8,7 +8,7 @@ import { PrismaClient } from './generated/prisma-client-js';
 import { sql } from '@vercel/postgres';
 import { TbPasswordUser } from 'react-icons/tb';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 
 // async function getUser(username: string) {

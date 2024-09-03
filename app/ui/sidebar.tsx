@@ -22,8 +22,10 @@ export default async function Sidebar() {
     let email = null;
     if (session) {
         user = session.user
-        username = user.info.username;
-        email = user.info.email;
+        if (user) {
+            username = user.info.username;
+            email = user.info.email;
+        }
     } 
 
     return (
