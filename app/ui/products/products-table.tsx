@@ -70,7 +70,7 @@ export default function ProductsTable(
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.name}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate">{item.quantity}</td>
-                                <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.price}</td>
+                                <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">KSH {item.price}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate actions-val">
                                     <DeleteButton id={item.id} deleteFunction={deleteProduct} />
                                 </td>

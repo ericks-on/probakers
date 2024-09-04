@@ -13,7 +13,7 @@ function onClick() {
             const dateOptionElement = document.getElementById('dateOption');
             const printButtonElement = document.getElementById('printButton');
             const actionsHeaderElement = document.getElementById('actions-col');
-            const actionsRowsElement = document.getElementsByClassName('actions-val');
+            const actionsRowsElement = document.getElementsByClassName('actions-val') as HTMLCollectionOf<HTMLElement>;
             if (dateOptionElement && printButtonElement && actionsHeaderElement && actionsRowsElement) {
                 dateOptionElement.style.display = 'none';
                 printButtonElement.style.display = 'none';
