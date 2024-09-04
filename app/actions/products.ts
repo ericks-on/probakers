@@ -15,6 +15,7 @@ export async function addProduct(
         const name = formdata.get('name') as string;
         const price = formdata.get('price') as string;
         const quantity = formdata.get('quantity') as string;
+        const date = formdata.get('date') as string;
 
         // Validate data
         if (!name || !price || isNaN(parseInt(price)) ||
@@ -22,17 +23,27 @@ export async function addProduct(
             return 'Invalid input data';
         }
 
+        if (!date) {
+            return 'please select a date';
+        }
+
+        if (new Date(date) > new Date()) {
+            return 'Date should not be in the future';
+        }
+
         const product = {
             id: uuidv4(),
             name,
             price: parseInt(price),
             quantity: parseInt(quantity),
+            createdat: new Date(date).toISOString(),
         };
 
         // Insert the new product into the database
         await sql`
-            INSERT INTO product_probakers (id, name, price, quantity)
-            VALUES (${product.id}, ${product.name}, ${product.price}, ${product.quantity})
+            INSERT INTO product_probakers (id, name, price, quantity, createdat)
+            VALUES (${product.id}, ${product.name}, ${product.price},
+            ${product.quantity}, ${product.createdat})
         `;
 
     } catch (error) {

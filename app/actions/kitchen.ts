@@ -16,11 +16,20 @@ export async function addKitchen(
         const type = formdata.get('type') as string;
         const quantity = formdata.get('quantity') as string;
         const quantityProduce = formdata.get('quantityProduce') as string;
+        const date = formdata.get('date') as string;
 
         // Validate data
         if (!rawproduct || !type || !quantity || isNaN(parseInt(quantity)) ||
             !quantityProduce || isNaN(parseInt(quantityProduce))) {
             return 'Invalid input data';
+        }
+
+        if (!date) {
+            return 'please select a date';
+        }
+
+        if (new Date(date) > new Date()) {
+            return 'Date should not be in the future';
         }
 
         const kitchen = {
@@ -29,12 +38,14 @@ export async function addKitchen(
             type,
             quantity: parseInt(quantity),
             producequantity: parseInt(quantityProduce),
+            createdat: new Date(date).toISOString(),
         };
 
         // Insert the new item into the database
         await sql`
-            INSERT INTO kitchen_probakers (id, rawproduct, type, quantity, producequantity)
-            VALUES (${kitchen.id}, ${kitchen.rawproduct}, ${kitchen.type}, ${kitchen.quantity}, ${kitchen.producequantity})
+            INSERT INTO kitchen_probakers (id, rawproduct, type, quantity, producequantity, createdat)
+            VALUES (${kitchen.id}, ${kitchen.rawproduct}, 
+            ${kitchen.type}, ${kitchen.quantity}, ${kitchen.producequantity}, ${kitchen.createdat})
         `;
 
     } catch (error) {

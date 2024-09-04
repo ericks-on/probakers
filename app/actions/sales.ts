@@ -16,6 +16,7 @@ export async function addSale(
         const typeSale = formdata.get('typeSale') as string;
         const quantity = formdata.get('quantity') as string;
         const price = formdata.get('price') as string;
+        const date = formdata.get('date') as string;
 
         // Validate data
         if (!typeProduct || !typeSale || !quantity || isNaN(parseInt(quantity)) ||
@@ -23,18 +24,29 @@ export async function addSale(
             return 'Invalid input data';
         }
 
+        if (!date) {
+            return 'please select a date';
+        }
+
+        if (new Date(date) > new Date()) {
+            return 'Date should not be in the future';
+        }
+
+
         const sale = {
             id: uuidv4(),
             typeProduct,
             typeSale,
             quantity: parseInt(quantity),
             price: parseInt(price),
+            date: new Date(date).toISOString(),
         };
 
         // Insert the new sale into the database
         await sql`
-            INSERT INTO sale_probakers (id, typeProduct, typeSale, quantity, price)
-            VALUES (${sale.id}, ${sale.typeProduct}, ${sale.typeSale}, ${sale.quantity}, ${sale.price})
+            INSERT INTO sale_probakers (id, typeProduct, typeSale, quantity, price, createdat)
+            VALUES (${sale.id}, ${sale.typeProduct}, ${sale.typeSale}, 
+            ${sale.quantity}, ${sale.price}, ${sale.date})
         `;
 
     } catch (error) {

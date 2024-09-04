@@ -30,6 +30,10 @@ export default function KitchenForm() {
                         <label className="text-gray-700" htmlFor="quantityProduce">Quantity of produce</label>
                         <input className="w-full px-4 py-2 mt-2 border text-grey-800 rounded-lg" type="number" id="quantityProduce" name="quantityProduce" />
                     </div>
+                    <div>
+                        <label className="text-gray-700" htmlFor="date">Date</label>
+                        <input className="w-full px-4 py-2 mt-2 border text-grey-800 rounded-lg" type="date" id="date" name="date" />
+                    </div>
                     <div className="flex justify-center items-center h-full">
                         <button className={clsx(
                             " px-2 py-2 mt-2 md:m-0 text-white bg-green-500 rounded-lg cursor-pointer",
