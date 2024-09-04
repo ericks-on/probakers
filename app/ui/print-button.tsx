@@ -12,18 +12,21 @@ function onClick() {
             
             const dateOptionElement = document.getElementById('dateOption');
             const printButtonElement = document.getElementById('printButton');
-            if (dateOptionElement && printButtonElement) {
+            const actionsHeaderElement = document.getElementById('actions-col');
+            const actionsRowsElement = document.getElementsByClassName('actions-val');
+            if (dateOptionElement && printButtonElement && actionsHeaderElement && actionsRowsElement) {
                 dateOptionElement.style.display = 'none';
                 printButtonElement.style.display = 'none';
+                actionsHeaderElement.style.display = 'none';
+                for (let i = 0; i < actionsRowsElement.length; i++) {
+                    actionsRowsElement[i].style.display = 'none';
+                }
             }
 
             window.print();
+            window.location.reload();
 
             document.body.innerHTML = originalContents;
-            if (dateOptionElement && printButtonElement) {
-                dateOptionElement.style.display = 'block';
-                printButtonElement.style.display = 'flex';
-            }
         }
     }
 

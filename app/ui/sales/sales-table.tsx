@@ -58,7 +58,7 @@ export default function SalesTable(
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[200px] truncate">Type of Product</th>
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[150px] truncate">Quantity Sold</th>
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[150px] truncate">Price</th>
-                            <th className="px-4 py-3 text-left text-gray-800 max-w-[150px] truncate">Actions</th>
+                            <th className="px-4 py-3 text-left text-gray-800 max-w-[150px] truncate" id="actions-col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +72,7 @@ export default function SalesTable(
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.typeproduct}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate">{item.quantity}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate">{item.price}</td>
-                                <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate">
+                                <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[150px] truncate actions-val" >
                                     <DeleteButton id={item.id} deleteFunction={deleteSale} />
                                 </td>
                             </tr>
