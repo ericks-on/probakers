@@ -3,22 +3,27 @@
 function onClick() {
     if (document) {
         const printTableElement = document.getElementById('printTable');
-        const dateOptionElement = document.getElementById('dateOption');
-        const printButtonElement = document.getElementById('printButton');
 
-        if (printTableElement && dateOptionElement && printButtonElement) {
+        if (printTableElement ) {
             const printContents = printTableElement.innerHTML;
             const originalContents = document.body.innerHTML;
 
             document.body.innerHTML = printContents;
-            dateOptionElement.style.display = 'none';
-            printButtonElement.style.display = 'none';
+            
+            const dateOptionElement = document.getElementById('dateOption');
+            const printButtonElement = document.getElementById('printButton');
+            if (dateOptionElement && printButtonElement) {
+                dateOptionElement.style.display = 'none';
+                printButtonElement.style.display = 'none';
+            }
 
             window.print();
 
             document.body.innerHTML = originalContents;
-            dateOptionElement.style.display = 'block';
-            printButtonElement.style.display = 'flex';
+            if (dateOptionElement && printButtonElement) {
+                dateOptionElement.style.display = 'block';
+                printButtonElement.style.display = 'flex';
+            }
         }
     }
 
