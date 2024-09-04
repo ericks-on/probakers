@@ -8,9 +8,11 @@ import { CiCalendarDate } from "react-icons/ci";
 import PrintButton from "../print-button";
 import { Sale } from "@/app/lib/definitions";
 
-export default async function SalesTable(
+export default function SalesTable(
     { dates, items }: { dates: string[], items: Sale[] | string }) {
     const [date, setDate] = useState('all');
+    const [ariaDisabledDate, setAriaDisabledDate] = useState(false);
+    const today = new Date().toISOString().split('T')[0];
 
     if (date !== 'all') {
         items = items as Sale[];
@@ -19,21 +21,33 @@ export default async function SalesTable(
         items = items as Sale[];
     }
 
+    function allOption(checkbox: any) {
+        if (checkbox.target.checked) {
+            setDate('all');
+            setAriaDisabledDate(true);
+        } else {
+            setDate(today);
+            setAriaDisabledDate(false);
+        }
+    }
+
     return (
         <Suspense fallback={<TableSkeleton />}>
             <div className="container min-96 shadow w-full md:max-h-screen overflow-auto" id="printTable">
                 <h1 className="text-2xl text-green-800 font-bold p-2">Sales</h1>
                 {/* select options to print */}
                 <div className="flex justify-end p-2" id='dateOption'>
-                    <select className="p-2 border border-green-300 rounded-md"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                    >
-                        <option value="all">All</option>
-                        {dates.map((date, index) => (
-                            <option key={index} value={date}>{date}</option>
-                        ))}
-                    </select>
+                    <div className="flex gap-2 items-center">
+                        <div className="flex items-center gap-2">
+                            <label htmlFor="alldate" className="text-xl text-gray-800">All</label>
+                            <input type="checkbox" name="date" id="alldate" value="all" checked={date === 'all'} onChange={ allOption } />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <label htmlFor="date" className="text-xl text-gray-800">Date</label>
+                            <input type="date" name="date" id="date" aria-disabled={ariaDisabledDate}
+                                    onChange={(e) => setDate(new Date(e.target.value).toISOString().split('T')[0])}/>
+                        </div>
+                    </div>
                     <PrintButton />
                 </div>
                 <table className="w-full mt-6 border-t">
@@ -52,7 +66,7 @@ export default async function SalesTable(
                             <tr key={index} className="border-b">
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate flex gap-2 items-center">
                                     <CiCalendarDate className="text-green-500" />
-                                    {item.createdat.toLocaleString()}
+                                    {item.createdat.toISOString().split('T')[0]}
                                 </td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.typesale}</td>
                                 <td className="px-4 py-3 text-sm text-gray-800 bg-green-50 max-w-[200px] truncate">{item.typeproduct}</td>
