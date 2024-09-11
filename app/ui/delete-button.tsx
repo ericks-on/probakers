@@ -9,7 +9,14 @@ export default function DeleteButton(
     const handleDelete = async () => {
         setIsDeleting(true);
         try {
-            await deleteFunction(id);
+            // confirim delete
+            if (!confirm('Are you sure you want to delete this item?')) {
+                return;
+            }
+            const error = await deleteFunction(id);
+            if (typeof error === 'string') {
+                alert(error);
+            }
             setIsDeleting(false); // Trigger a refresh or handle UI update
         } catch (error) {
             console.error('Failed to delete product:', error);

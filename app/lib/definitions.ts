@@ -32,3 +32,11 @@ export type Product = {
     quantity: number;
     createdat: Date;
 }
+
+export type Debt = {
+    id: string;
+    name: string;
+    amount: number;
+    paid: boolean;
+    createdat: Date;
+}

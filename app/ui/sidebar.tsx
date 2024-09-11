@@ -72,6 +72,12 @@ export default async function Sidebar() {
                     <span className="hidden md:block">Raw Products</span>
                 </div>
             </Link>
+            <Link href='/inventory/debt' className="flex gap-2  shadow border-b border-green-600">
+                <div className="flex items-center gap-2 p-2 text-green-700 hover:bg-gray-100 cursor-pointer w-full text-xl">
+                    <AiOutlineDollar />
+                    <span className="hidden md:block">Debts</span>
+                </div>
+            </Link>
             <UsersButton />
         </aside>
     )
