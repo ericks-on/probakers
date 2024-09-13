@@ -6,6 +6,8 @@ import { GiWoodenCrate } from "react-icons/gi";
 import UsersButton from "./users-button";
 import { auth } from "@/auth";
 import { profile } from "console";
+import { FaChartBar } from "react-icons/fa";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 interface User {
     name: string;
@@ -31,10 +33,10 @@ export default async function Sidebar() {
     } 
 
     return (
-        <aside className="flex md:flex-col w-screen md:w-60 p-4 bg-gray-300 h-16 md:h-screen gap-2">
+        <aside className="flex md:flex-col w-screen md:w-60 p-4 bg-gray-300 h-16 md:h-screen gap-2 overflow-auto">
             <h1 className="text-3xl mb-4 hidden md:block">Pro Bakers</h1>
             {user && username && email &&(
-                <div className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <div className="w-full bg-white shadow-md rounded-lg overflow-hidden hidden md:block">
                     <div className="p-4 flex flex-col">
                         <div className="flex items-center gap-2 ">
                             <CiUser className="w-8 h-8 text-gray-600" />
@@ -76,6 +78,18 @@ export default async function Sidebar() {
                 <div className="flex items-center gap-2 p-2 text-green-700 hover:bg-gray-100 cursor-pointer w-full text-xl">
                     <AiOutlineDollar />
                     <span className="hidden md:block">Debts</span>
+                </div>
+            </Link>
+            <Link href='/inventory/money-flow' className="flex gap-2  shadow border-b border-green-600">
+                <div className="flex items-center gap-2 p-2 text-green-700 hover:bg-gray-100 cursor-pointer w-full text-xl">
+                    <FaMoneyBillTransfer />
+                    <span className="hidden md:block">Money Flow</span>
+                </div>
+            </Link>
+            <Link href='/inventory/monthly-chart' className="flex gap-2  shadow border-b border-green-600">
+                <div className="flex items-center gap-2 p-2 text-green-700 hover:bg-gray-100 cursor-pointer w-full text-xl">
+                    <FaChartBar />
+                    <span className="hidden md:block">Monthly Chart</span>
                 </div>
             </Link>
             <UsersButton />

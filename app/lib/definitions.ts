@@ -40,3 +40,19 @@ export type Debt = {
     paid: boolean;
     createdat: Date;
 }
+
+export type MoneyFlow = {
+    id: string;
+    expense: number;
+    in_mandazi: number;
+    in_cakes: number;
+    createdat: Date;
+}
+
+export type MonthlyChart = {
+    month: number;
+    total_expenses: number;
+    total_income: number;
+    profit: number;
+    year: number;
+}
