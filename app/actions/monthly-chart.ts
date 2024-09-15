@@ -1,12 +1,13 @@
 'use server';
 
 import { sql } from '@vercel/postgres';
-import { MoneyFlow, MonthlyChart } from '../lib/definitions';
+import { MoneyFlow, MonthlyChart, Product } from '../lib/definitions';
 
 // Get monthly chart
 export async function getMonthlyChart(): Promise<MonthlyChart[]> {
     let moneyFlow: MoneyFlow[] = [];
     let monthlyChart: MonthlyChart[] = [];
+    let rawProducts: Product[] = [];
 
     try {
         const { rows } = await sql`
@@ -17,6 +18,18 @@ export async function getMonthlyChart(): Promise<MonthlyChart[]> {
         console.error('Error getting money flow:', error);
         return [];
     }
+
+    try {
+        const { rows } = await sql`
+            SELECT * FROM product_probakers
+        `;
+        rawProducts = rows as Product[];
+    } catch (error) {
+        console.error('Error getting products:', error);
+        return [];
+    }
+
+    // get expenses from raw products
 
     moneyFlow.forEach((item) => {
         const date = new Date(item.createdat);
@@ -49,6 +62,30 @@ export async function getMonthlyChart(): Promise<MonthlyChart[]> {
         }
     });
 
+    // add expenses from raw products to monthly chart
+    rawProducts.forEach((product) => {
+        const date = new Date(product.createdat);
+        const month = date.getMonth();
+        const year = date.getFullYear();
+
+        const index = monthlyChart.findIndex(
+            (chart) => chart.month === month && chart.year === year
+        );
+
+        if (index === -1) {
+            monthlyChart.push({
+                month,
+                total_expenses: product.price,
+                total_income: 0,
+                profit: 0 - product.price,
+                year,
+            });
+        } else {
+            monthlyChart[index].total_expenses += product.price;
+            monthlyChart[index].profit -= product.price;
+        }
+    });
+
     return monthlyChart.sort((a, b) => {
         if (a.year === b.year) {
             return b.month - a.month;
@@ -56,3 +93,5 @@ export async function getMonthlyChart(): Promise<MonthlyChart[]> {
         return a.year - b.year;
     })
 }
+
+

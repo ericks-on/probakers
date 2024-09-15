@@ -55,7 +55,7 @@ export default function MoneyFlowTable(
                     <thead className="border-b-2 border-green-300">
                         <tr>
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[200px] truncate">Date</th>
-                            <th className="px-4 py-3 text-left text-gray-800 max-w-[200px] truncate">Expense</th>
+                            <th className="px-4 py-3 text-left text-gray-800 max-w-[200px] truncate">Daily Expense</th>
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[200px] truncate">In Mandazi</th>
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[150px] truncate">In Cakes</th>
                             <th className="px-4 py-3 text-left text-gray-800 max-w-[150px] truncate" id="actions-col">Actions</th>

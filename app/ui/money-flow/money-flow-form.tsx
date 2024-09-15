@@ -16,7 +16,7 @@ export default function MoneyFlowForm() {
             <form className="mt-6" action={formAction}>
                 <div className="grid grid-cols-1 gap-6">
                     <div>
-                        <label className="text-gray-700" htmlFor="expense">Expense</label>
+                        <label className="text-gray-700" htmlFor="expense">Other daily Expenses</label>
                         <input className="w-full px-4 py-2 mt-2 border text-grey-800 rounded-lg" type="number" id="expense" name="expense" defaultValue={0} />
                     </div>
                     <div>
