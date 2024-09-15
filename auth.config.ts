@@ -1,12 +1,16 @@
 import next from 'next';
 import { DefaultSession } from 'next-auth';
 import type { NextAuthConfig } from 'next-auth';
+import { getSession } from 'next-auth/react';
 
 
 export const authConfig = {
     providers: [],
     pages: {
         signIn: '/',
+    },
+    session: {
+        maxAge: 60 * 60, // 15 minutes
     },
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
@@ -38,5 +42,5 @@ export const authConfig = {
         },
         
     },
-    secret: process.env.AUTH_SECRET
+    secret: process.env.AUTH_SECRET,
 } satisfies NextAuthConfig;

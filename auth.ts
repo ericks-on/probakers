@@ -130,8 +130,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                         if (!passwordsMatch) {
                             passwordsMatch = password === user.password;
                         }
-                        // Proceed based on the result of passwordsMatch
-                        console.log(passwordsMatch);
                     } 
 
                     // filter out the password from the user object
